@@ -1,4 +1,9 @@
-<h3><a class="btn btn-secondary" href="/home"><i class="fa fa-plus"></i> Create New</a> Employee List</h3>
+<h3> Employee List</h3>
+<div class="form-group">
+         <a class="btn btn-dark" href="/home/"><i class="fa fa-home"></i> Home </a>
+        <a class="btn btn-dark" href="/home/employee"><i class="fa fa-list-alt"></i>Add new employee </a>
+
+    </div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -12,13 +17,13 @@
     <tbody>
         {{#each list}}
         <tr>
-            <td>{{ this.fullName }}</td>
-            <td>{{ this.email }}</td>
-            <td>{{ this.mobile }}</td>
-            <td>{{ this.city }}</td>
+            <td>{{this.fullName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.mobile}}</td>
+            <td>{{this.city}}</td>
             <td>
                 <a href="/employee/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                <a href="/employee/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                <a href="/list/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
             </td>
         </tr>
         {{/each}}

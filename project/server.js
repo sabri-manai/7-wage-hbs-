@@ -15,6 +15,8 @@ app.use(bodyparser.json());
 app.set('views', path.join(__dirname, '/views/'));
 app.engine('hbs', exphbs({ extname: 'hbs', defaultLayout: 'mainLayout', layoutsDir: __dirname + '/views/' }));
 app.set('view engine', 'hbs');
+app.use(express.static('views/images')); 
+
 
 app.listen(3000, () => {
     console.log('Express server started at port : 3000');

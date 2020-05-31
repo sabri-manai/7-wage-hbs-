@@ -29,29 +29,29 @@ router.get('/product', (req, res) => {
 router.post('/employee', async(req, res) => {
    let employee = await Employee.findOne({ email: req.body.email });
    if (employee) { 
-    return res.redirect("/home/list");
+    return res.redirect("/home/employee");
    }
    else {
-     employee = new Employee({
-    name : req.body.fullName,
+    employee = new Employee({
+    fullName : req.body.fullName,
     email : req.body.email,
     mobile : req.body.mobile,
     city : req.body.city,
 });
 await employee.save();
-return res.redirect('/home/list');
+return res.redirect('/home/employee');
    }
 
 });
 
 router.post('/product', async(req, res) => {
-    let product = await Product.findOne({ productId: req.body.productId });
+    let product = await Product.findOne({ productID: req.body.productID });
     if (product) { 
-     return res.redirect("/home/productList");
+     return res.redirect("/home/product");
     }
     else {
       product = new Product({
-     productId : req.body.productId,
+     productID : req.body.productID,
      item : req.body.item,
      price : req.body.price,
      quantity : req.body.quantity,
@@ -60,7 +60,7 @@ router.post('/product', async(req, res) => {
  });
  
  await product.save();
- return res.redirect('/home/productList');
+ return res.redirect('/home/product');
     }
  
  });
@@ -109,30 +109,13 @@ function updateRecord(req, res) {
 }
 
 
-//function handleValidationError(err, body) {
-  //  for (field in err.errors) {
-     //   switch (err.errors[field].path) {
-      //      case 'fullName':
-       //         body['fullNameError'] = err.errors[field].message;
-      //          break;
-       //     case 'email':
-      //          body['emailError'] = err.errors[field].message;
-     //           break;
-      //      default:
-     //           break;
-      //  }
-    //}
-//}
 
 
 
-router.get('/delete/:id', (req, res) => {
-    Employee.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('employee/list');
-        }
-        else { console.log('Error in employee delete :' + err); }
-    });
+router.get('/delete/:id', async(req, res) => {
+  let employee = await  Employee.findByIdAndRemove({id:req.body._id}) ; 
+        await employee.save;
+        return res.redirect('/home/list');
 });
 
 module.exports = router;
