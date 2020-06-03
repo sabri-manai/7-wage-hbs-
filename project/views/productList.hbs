@@ -1,14 +1,15 @@
-<h3> Product</h3>
-    <a class="btn btn-dark" href="/home/"><i class="fa fa-home"></i> Home </a>
-    <a class="btn btn-dark" href="/home/product"><i class="fa fa-list-alt"></i>Add new product</a>
+<h3> {{vie}} </h3>
+    
 <table class="table table-striped">
     <thead>
         <tr>
             <th>ProductID</th>
             <th>Item</th>
-            <th>Price</th>
+            <th>Color</th>
+            <th>Gender</th>    
             <th>Quantity</th>
             <th>Size</th>
+            <th>Price</th>
         </tr>
     </thead>
     <tbody>
@@ -16,12 +17,14 @@
         <tr>
             <td>{{this.productID}}</td>
             <td>{{this.item}}</td>
-            <td>{{this.price}}</td>
+            <td>{{this.color}}</td>
+            <td>{{this.gender}}</td>
             <td>{{this.quantity}}</td>
             <td>{{this.size}}</td>
+            <td>{{this.price}}</td>
             <td>
                 <a href="/product/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                <a href="/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                <a href="/product/deleteProduct/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
             </td>
         </tr>
         {{/each}}

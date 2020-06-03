@@ -1,0 +1,50 @@
+<h3>{{viewTit}}</h3>
+        
+<form action="/home/order" method="POST" autocomplete="off">
+    <input type="hidden" name="id" value="{{order.id}}">
+    <div class="form-group">
+        <label>Order ID</label>
+        <input type="text" class="form-control" name="orderID" placeholder="Order ID" value="{{order.orderID}}">
+        <div class="text-danger">
+            {{order.orderIDError}}</div>
+    </div> 
+     <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Total price (DNT)</label>
+            <input type="text" class="form-control" name="totalPrice" placeholder="Total price (DNT)" value="{{order.totalPrice}}">
+        </div>
+    </div>
+              <h4>  Costumer Info</h4>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+            <label> Costumer name</label>
+            <input type="text" class="form-control" name="costumerName" placeholder="Costumer Name" value="{{order.costumerName}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Phone</label>
+            <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{order.phone}}">
+        </div>
+    </div>
+
+
+<div class="form-row">
+ 
+  <div class="form-group col-md-6">
+            <label>  Delivery </label>
+            <input type="text" class="form-control" name="delivery" placeholder="Delivery" value="{{order.delivery}}">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Address</label>
+            <input type="text" class="form-control" name="address" placeholder="Address" value="{{order.address}}">    
+        </div>
+ 
+    </div>
+
+
+  
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-dark"><i class="fa fa-plus-square"></i> Submit</button>
+    </div>
+
+</form>

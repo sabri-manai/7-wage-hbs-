@@ -1,11 +1,217 @@
-<h3>{{viewT}}</h3>
+<head>
+  <meta charset="UTF-8">
+  <title>7 Wage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <h3>{{viewT}}</h3>
+ 
+<div id="tasker" class="tasker">
+	<div id="error" class="error">Please Enter a Task</div>
+	<div id="todo-header" class="todo-header">
+		<input type="text" id="input-task" placeholder="Enter Your Task">
+		<button id="add-task"><i class="fa fa-fw fa-plus"></i>
+		</button>
+	</div>
+	<div class="todo-lists">
+		<ul id="tasks">
 
-<div class="form-group">
-         <a class="btn btn-dark" href="/home/employee"><i class="fa fa-plus-square"></i> Add employee</a>
-               <a class="btn btn-dark" href="/employee/list"><i class="fa fa-list-ul"></i> View All employees</a>
+		</ul>
+	</div>
+</div>
+</body>
+<style>
+	
 
-        <a class="btn btn-dark" href="/home/product"><i class="fa fa-plus-square"></i>Add product </a>
-      <a class="btn btn-dark" href="/product/productList"><i class="fa fa-list-ul"></i> View All products</a>
+  .tasker ul, .tasker li,
+  .tasker .error,
+  .tasker button,
+  .tasker input {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+  .todo-header button, .todo-lists .task button {
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+  }
+  .tasker {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .tasker .error {
+    display: none;
+    background: #ff4747;
+    color: #fff;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .tasker ul {
+    background: #fff;
+  }
+  .tasker li,
+  .tasker .error,
+  .tasker button,
+  .tasker input {
+    font: 18px/1.25em 'Lato', sans-serif;
+  }
+  .todo-header {
+    display: inline-flex;
+    background: #212121;
+    justify-content: space-between;
+    width: 100%;
+  }
+  #input-task {
+    color: white;
+  }
+  .todo-header input,
+  .todo-header button {
+    color: #fff;
+    box-sizing: border-box;
+    font-size: 1.25em;
+    padding: 14px;
+  }
+  .todo-header input {
+    flex-grow: 2;
+  }
+  .todo-header button {
+    background: #00b934;
+    border-left: 1px solid #098009;
+  }
+  .todo-header button:hover {
+    background: #5cb85c;
+  }
+  .todo-lists .task {
+    display: block;
+    position: relative;
+    padding: 14px 40px 14px 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .todo-lists .task:last-child {
+    border-bottom: none;
+  }
+  .todo-lists .task:hover > button {
+    opacity: 1;
+  }
+  .todo-lists .task.completed {
+    color: #cdcdcd;
+    text-decoration: line-through;
+  }
+  .todo-lists .task input {
+    margin-right: 10px;
+  }
+  .todo-lists .task button {
+    color: #cdcdcd;
+    margin: 14px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+  }
+  .todo-lists .task button:hover {
+    color: #ed1c24;
+  }
+
+</style>
+
+<script >
+
+	(function() {
+	'use strict';
+	var tasker = {
+		init: function() {
+			this.cacheDom();
+			this.bindEvents();
+			this.evalTasklist();
+		},
+		cacheDom: function() {
+			this.taskInput = document.getElementById("input-task");
+			this.addBtn = document.getElementById("add-task");
+			this.tasklist = document.getElementById("tasks");
+			this.tasklistChildren = this.tasklist.children;
+			this.errorMessage = document.getElementById("error");
+		},
+		bindEvents: function() {
+			this.addBtn.onclick = this.addTask.bind(this);
+			this.taskInput.onkeypress = this.enterKey.bind(this);
+		},
+		evalTasklist: function() {
+			var i, chkBox, delBtn;
+			for (i = 0; i < this.tasklistChildren.length; i += 1) {
+
+				chkBox = this.tasklistChildren[i].getElementsByTagName("input")[0];
+				chkBox.onclick = this.completeTask.bind(this, this.tasklistChildren[i], chkBox);
+
+				delBtn = this.tasklistChildren[i].getElementsByTagName("button")[0];
+				delBtn.onclick = this.delTask.bind(this, i);
+			}
+		},
+		render: function() {
+			var taskLi, taskChkbx, taskVal, taskBtn, taskTrsh;
+			taskLi = document.createElement("li");
+			taskLi.setAttribute("class", "task");
+			taskChkbx = document.createElement("input");
+			taskChkbx.setAttribute("type", "checkbox");
+			taskVal = document.createTextNode(this.taskInput.value);
+			taskBtn = document.createElement("button");
+			taskTrsh = document.createElement("i");
+			taskTrsh.setAttribute("class", "fa fa-trash");
+			taskBtn.appendChild(taskTrsh);
+
+			taskLi.appendChild(taskChkbx);
+			taskLi.appendChild(taskVal);
+			taskLi.appendChild(taskBtn);
+
+			this.tasklist.appendChild(taskLi);
+
+		},
+		completeTask: function(i, chkBox) {
+			if (chkBox.checked) {
+				i.className = "task completed";
+			} else {
+				this.incompleteTask(i);
+			}
+		},
+		incompleteTask: function(i) {
+			i.className = "task";
+		},
+		enterKey: function(event) {
+			if (event.keyCode === 13 || event.which === 13) {
+				this.addTask();
+			}
+		},
+		addTask: function() {
+			var value = this.taskInput.value;
+			this.errorMessage.style.display = "none";
+
+			if (value === "") {
+				this.error();
+			} else {
+				this.render();
+				this.taskInput.value = "";
+				this.evalTasklist();
+			}
+		},
+		delTask: function(i) {
+			this.tasklist.children[i].remove();
+			this.evalTasklist();
+		},
+		error: function() {
+			this.errorMessage.style.display = "block";
+		}
+	};
+
+	tasker.init();
+}());
+</script>
 
 
-    </div>
+ 
+</body>

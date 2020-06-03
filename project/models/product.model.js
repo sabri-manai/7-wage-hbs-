@@ -7,7 +7,7 @@ var productSchema = new mongoose.Schema({
     item: {
         type: String
     },
-    price: {
+    color: {
         type: String
     },
     quantity: {
@@ -15,7 +15,13 @@ var productSchema = new mongoose.Schema({
     },
     size: {
         type: String
-    }
+    },
+    gender: {
+        type: String
+    },
+    price: {
+        type: String
+    },
 });
 
 

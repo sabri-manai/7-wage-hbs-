@@ -1,9 +1,4 @@
-<h3> Employee List</h3>
-<div class="form-group">
-         <a class="btn btn-dark" href="/home/"><i class="fa fa-home"></i> Home </a>
-        <a class="btn btn-dark" href="/home/employee"><i class="fa fa-list-alt"></i>Add new employee </a>
-
-    </div>
+<h3>{{view}}</h3>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -11,7 +6,10 @@
             <th>Email</th>
             <th>Mobile</th>
             <th>City</th>
-            <th></th>
+            <th>Department</th>
+            <th>Starting Date</th>
+            <th>Grade</th>
+            <th>Salary</th>
         </tr>
     </thead>
     <tbody>
@@ -21,9 +19,13 @@
             <td>{{this.email}}</td>
             <td>{{this.mobile}}</td>
             <td>{{this.city}}</td>
+            <td>{{this.department}}</td>
+            <td>{{this.startingDate}}</td>
+            <td>{{this.grade}}</td>
+            <td>{{this.salary}}</td>
             <td>
                 <a href="/employee/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                <a href="/list/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                <a href="/employee/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
             </td>
         </tr>
         {{/each}}
